@@ -112,7 +112,12 @@ public class Game2 extends JFrame
 //        
 //    }
 //    
-//    
+//  
+    @Override
+    public void show()
+    {
+        gameMenu.show();
+    }
     public Game2(int gID, int pID)
     {
         gameMenu = new JFrame("Tic-Tac-Toe");
@@ -153,6 +158,12 @@ public class Game2 extends JFrame
         g.setBackground(Color.white);
         gameMenu.add(g);
         gameMenu.setSize(200,200);
+        
+        for (int i = 0; i<3; i++)
+        {
+            for (int j = 0; j<3; j++)
+                grid[i][j] = " ";
+        }
         
         //int state = Integer.parseInt(getGameState(gID));
         //if (state !=-1){

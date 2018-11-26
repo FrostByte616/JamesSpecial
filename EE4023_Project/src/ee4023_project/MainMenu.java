@@ -51,7 +51,10 @@ public class MainMenu extends JFrame implements Runnable
             @Override
             public void actionPerformed(ActionEvent e)
                 {
-                    newGame(userID);
+                    int gid = Integer.parseInt(newGame(userID));
+                    
+                    Game2 newgame = new Game2(gid, userID);
+                    newgame.show();
                 }
         });
         

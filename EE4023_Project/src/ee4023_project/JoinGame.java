@@ -54,8 +54,10 @@ public class JoinGame extends JFrame
                 {
                     int gid = Integer.parseInt(gameToJoin.getText());
                     joinGame(userID, gid);
-                    Game newGame = new Game();
+                    Game2 newGame = new Game2(gid, userID);
                     newGame.show();
+                    mainMenu.hide();
+                    menu2.hide();
                 }
         });
         
