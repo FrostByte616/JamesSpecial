@@ -71,6 +71,26 @@ public class MainMenu extends JFrame
                 }
         });
         
+        leaderboard.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+                {
+                    Leaderboard l = new Leaderboard();
+                    l.show();  
+                }
+        });
+        
+        score.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+                {
+                    MyScore s = new MyScore(userID);
+                    s.show();  
+                }
+        });
+        
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         
