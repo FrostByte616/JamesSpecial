@@ -54,7 +54,8 @@ public class MainMenu extends JFrame implements Runnable
                     int gid = Integer.parseInt(newGame(userID));
                     
                     Game2 newgame = new Game2(gid, userID);
-                    newgame.show();
+                    //newgame.show();
+                    mainMenu.hide();
                 }
         });
         
@@ -66,6 +67,7 @@ public class MainMenu extends JFrame implements Runnable
                 {
                     JoinGame jg = new JoinGame(userID);
                     jg.show();
+                    mainMenu.hide();
                 }
         });
         
