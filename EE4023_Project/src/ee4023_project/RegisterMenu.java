@@ -66,7 +66,7 @@ public class RegisterMenu extends JFrame
                     
                     register(user, pass, names, snames);
                     userID = login(user, pass);
-                    MainMenu newMenu = new MainMenu(userID);
+                    MainMenu newMenu = new MainMenu(userID, user);
                     newMenu.show();
                     mainMenu.hide();
                 }

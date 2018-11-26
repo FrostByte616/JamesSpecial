@@ -62,7 +62,7 @@ public class LoginMenu extends JFrame
                 }
                 else
                 {
-                    MainMenu newMenu = new MainMenu(userID);
+                    MainMenu newMenu = new MainMenu(userID, user);
                     newMenu.show();
                     mainMenu.hide();
                 }

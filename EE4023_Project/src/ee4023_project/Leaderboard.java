@@ -7,6 +7,7 @@ package ee4023_project;
 
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 /**
@@ -21,11 +22,18 @@ public class Leaderboard extends JFrame
    String [] columnNames = {"Player Name", "Wins", "Losses", "Draws"};
    String [][] data, list2;
    JFrame mainMenu;
+   JScrollPane sp;
    JTable leaderboard;
    
    public Leaderboard()
    {
-       
+       populateBoard();
+       fillBoard();
+       leaderboard = new JTable(data, columnNames);
+       sp = new JScrollPane(leaderboard); 
+       mainMenu = new JFrame("Leaderboard");
+       mainMenu.add(sp);
+       mainMenu.setSize(350,350);
    }
    
    @Override
@@ -36,45 +44,27 @@ public class Leaderboard extends JFrame
    
    public void populateBoard()
    {
+       System.out.println("Populate called");
        String[] list = leagueTable().split("\n");
-       list2 = new String[list.length][];
+       list2 = new String[list.length][5];
        for (int i = 0; i < list.length; i++)
-            list2[i]=list[i].split(",");
+           list2[i]=list[i].split(",");
        
-       players.add(list2[0][1]);
-       players.add(list2[0][2]);
-        
-       for(int x = 0; x < list2.length; x++)
+       System.out.println("Populate step1");
+       for(int x = 0; x < list.length; x++)
        {
-           addable = true;
-            for(int y = 0; y < players.size(); y++)
-            {
-                while(addable == true)
-                {
-                    if(list2[x][1].equals(players.get(y)))
-                        addable = false;
-                }
-            }
-            if(addable == true)
-                players.add(list2[x][1]);       
+           if(!players.contains(list2[x][1]))
+               players.add(list2[x][1]);
+           if(!players.contains(list2[x][2]))
+               players.add(list2[x][2]);
        }
        
-       for(int x = 0; x < list2.length; x++)
-       {
-           addable = true;
-            for(int y = 0; y < players.size(); y++)
-            {
-                while(addable == true)
-                {
-                    if(list2[x][2].equals(players.get(y)))
-                        addable = false;
-                }
-            }
-            if(addable == true)
-                players.add(list2[x][2]);       
-       }
-       
-       data = new String[players.size()][4];
+       System.out.println(players);
+
+       System.out.println("Populate step3");
+       int newsize = players.size();
+       System.out.println(newsize);
+       data = new String[newsize][4];
        
        for(int i = 0; i < data.length; i++)
        {
@@ -83,6 +73,7 @@ public class Leaderboard extends JFrame
            data[i][2]="0";
            data[i][3]="0";
        }
+       System.out.println("Populate worked");
    }
    
    public void fillBoard()
@@ -105,6 +96,44 @@ public class Leaderboard extends JFrame
                        int temp = Integer.parseInt(data[j][2]);
                        temp++;
                        data[j][2] = temp + "";
+                   }
+               }
+           }
+           else if(Integer.parseInt(list2[i][3])==2)
+           {
+               for(int j = 0; j < data.length; j++)
+               {
+                   if(list2[i][2].equals(data[j][0]))
+                   {
+                       int temp = Integer.parseInt(data[j][2]);
+                       temp++;
+                       data[j][2] = temp + "";
+                   }
+                   
+                   if(list2[i][1].equals(data[j][0]))
+                   {
+                       int temp = Integer.parseInt(data[j][1]);
+                       temp++;
+                       data[j][1] = temp + "";
+                   }
+               }
+           }
+           else
+           {
+               for(int j = 0; j < data.length; j++)
+               {
+                   if(list2[i][1].equals(data[j][0]))
+                   {
+                       int temp = Integer.parseInt(data[j][3]);
+                       temp++;
+                       data[j][3] = temp + "";
+                   }
+                   
+                   if(list2[i][2].equals(data[j][0]))
+                   {
+                       int temp = Integer.parseInt(data[j][3]);
+                       temp++;
+                       data[j][3] = temp + "";
                    }
                }
            }

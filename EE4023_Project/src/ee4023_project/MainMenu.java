@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,35 +23,28 @@ import javax.swing.JTextField;
  *
  * @author tjbow
  */
-public class MainMenu extends JFrame 
+public class MainMenu extends JFrame implements Runnable
 {
     int userID;
+    String username;
     JFrame mainMenu;
     JButton score, leaderboard, createGame, joinGame;
-    //JTable availGames;
-    JLabel gameName, availGames;
-    JTextField gameToJoin;
     JPanel p;
     
-    public MainMenu(int userID)
+    public MainMenu(int userID, String username)
     {
         this.userID = userID;
+        this.username = username;
         mainMenu = new JFrame("Main Menu");
         score = new JButton("Score");
         leaderboard = new JButton("Leaderboard");
         createGame = new JButton("Create Game");
         joinGame = new JButton("Join Game");
-        gameName = new JLabel("Enter the Game ID you want to join:");
-        gameToJoin = new JTextField();
-        availGames = new JLabel(showOpenGames());
         
         score.setAlignmentX(Component.CENTER_ALIGNMENT);
         leaderboard.setAlignmentX(Component.CENTER_ALIGNMENT);
         createGame.setAlignmentX(Component.CENTER_ALIGNMENT);
         joinGame.setAlignmentX(Component.CENTER_ALIGNMENT);
-        gameName.setAlignmentX(Component.CENTER_ALIGNMENT);
-        gameToJoin.setAlignmentX(Component.CENTER_ALIGNMENT);
-        availGames.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         createGame.addActionListener(new ActionListener()
         {
@@ -61,13 +55,14 @@ public class MainMenu extends JFrame
                 }
         });
         
+        
         joinGame.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
                 {
-                    int gID = Integer.parseInt(gameToJoin.getText());
-                    joinGame(userID, gID);
+                    JoinGame jg = new JoinGame(userID);
+                    jg.show();
                 }
         });
         
@@ -86,7 +81,7 @@ public class MainMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
                 {
-                    MyScore s = new MyScore(userID);
+                    MyScore s = new MyScore(userID, username);
                     s.show();  
                 }
         });
@@ -101,17 +96,17 @@ public class MainMenu extends JFrame
         p.add(Box.createRigidArea(new Dimension(0,5)));
         p.add(createGame);
         p.add(Box.createRigidArea(new Dimension(0,5)));
-        p.add(availGames);
-        p.add(Box.createRigidArea(new Dimension(0,5)));
-        p.add(gameName);
-        p.add(Box.createRigidArea(new Dimension(0,5)));
-        p.add(gameToJoin);
-        p.add(Box.createRigidArea(new Dimension(0,5)));
         p.add(joinGame);
         p.add(Box.createRigidArea(new Dimension(0,5)));
         mainMenu.add(p);
-        mainMenu.setSize(300,300);
+        mainMenu.setSize(200,200);
         
+        
+    }
+    
+    @Override
+    public void run()
+    {
         
     }
     
@@ -120,22 +115,10 @@ public class MainMenu extends JFrame
     {
         mainMenu.show();
     }
-
-    private static String showOpenGames() {
-        ttt.james.server.TTTWebService_Service service = new ttt.james.server.TTTWebService_Service();
-        ttt.james.server.TTTWebService port = service.getTTTWebServicePort();
-        return port.showOpenGames();
-    }
-
+    
     private static String newGame(int uid) {
         ttt.james.server.TTTWebService_Service service = new ttt.james.server.TTTWebService_Service();
         ttt.james.server.TTTWebService port = service.getTTTWebServicePort();
         return port.newGame(uid);
-    }
-
-    private static String joinGame(int uid, int gid) {
-        ttt.james.server.TTTWebService_Service service = new ttt.james.server.TTTWebService_Service();
-        ttt.james.server.TTTWebService port = service.getTTTWebServicePort();
-        return port.joinGame(uid, gid);
     }
 }
